@@ -1,5 +1,5 @@
 <template>
-  <div class="newcategory">
+  <div class="new-category">
     <h3>Add new expense category</h3>
     <div class="row">
       <form @submit.prevent="saveCategory" class="col s12">

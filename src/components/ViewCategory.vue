@@ -4,6 +4,8 @@
       <li class="collection-header"><h4>Category</h4></li>
       <li class="collection-item">Name: {{name}}</li>
     </ul>
+    <router-link to="/categories" class="btn grey">Back</router-link>
+    <router-link v-if="id" v-bind:to="{name: 'edit-category', params: {category_id: id}}" class="btn red">Edit</router-link>
   </div>
 </template>
 
@@ -23,7 +25,7 @@ export default {
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
           next(vm => {
-            vm.id = doc.id
+            vm.id = doc.data().id
             vm.name = doc.data().name
           })
         })

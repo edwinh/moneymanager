@@ -1,9 +1,17 @@
 <template>
   <div class="edit-category">
-    <ul class="collection with-header">
-      <li class="collection-header"><h4>Category</h4></li>
-      <li class="collection-item">Name: {{name}}</li>
-    </ul>
+    <h3>Edit expense category</h3>
+    <div class="row">
+      <form @submit.prevent="updateCategory" class="col s12">
+        <div class="row">
+          <div class="input-field col s12">
+            <input type="text" class="validate" v-model="name" autofocus required>
+          </div>
+        </div>
+        <button type="submit" class="btn">Submit</button>
+        <router-link to="/categories" class="btn grey">Cancel</router-link>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -23,11 +31,27 @@ export default {
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
           next(vm => {
-            vm.id = doc.id
+            vm.id = doc.data().id
             vm.name = doc.data().name
           })
         })
       })
+  },
+  methods: {
+    updateCategory () {
+      console.log('update category ' + this.id)
+      db.collection('categories').where('id', '==', this.id).get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc => {
+            doc.ref.update({
+              name: this.name
+            })
+              .then(() => {
+                this.$router.push({name: 'view-category', params: {category_id: this.id}})
+              })
+          })
+        })
+    }
   }
 }
 </script>
