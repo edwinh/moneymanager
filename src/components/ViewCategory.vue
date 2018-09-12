@@ -1,5 +1,5 @@
 <template>
-  <div class="view-category">
+  <div class="card-panel blue lighten-5">
     <ul class="collection with-header">
       <li class="collection-header"><h4>Category</h4></li>
       <li class="collection-item">Name: {{name}}</li>

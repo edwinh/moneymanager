@@ -1,5 +1,5 @@
 <template>
-  <div class="edit-category">
+  <div class="card-panel blue lighten-5">
     <h3>Edit expense category</h3>
     <div class="row">
       <form @submit.prevent="updateCategory" class="col s12">
