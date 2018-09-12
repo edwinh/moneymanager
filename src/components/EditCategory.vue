@@ -1,5 +1,5 @@
 <template>
-  <div class="view-category">
+  <div class="edit-category">
     <ul class="collection with-header">
       <li class="collection-header"><h4>Category</h4></li>
       <li class="collection-item">Name: {{name}}</li>
@@ -10,7 +10,7 @@
 <script>
 import db from './firebaseInit'
 export default {
-  name: 'view-category',
+  name: 'edit-category',
   data () {
     return {
       id: null,

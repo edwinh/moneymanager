@@ -2,8 +2,9 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Dashboard from '@/components/Dashboard'
 import Categories from '@/components/Categories'
-import NewCategories from '@/components/NewCategory'
-import ViewCategories from '@/components/ViewCategory'
+import NewCategory from '@/components/NewCategory'
+import ViewCategory from '@/components/ViewCategory'
+import EditCategory from '@/components/EditCategory'
 
 Vue.use(Router)
 
@@ -21,13 +22,18 @@ export default new Router({
     },
     {
       path: '/add-category',
-      name: 'NewCategory',
-      component: NewCategories
+      name: 'new-category',
+      component: NewCategory
     },
     {
-      path: '/view-category',
-      name: 'ViewCategory',
-      component: ViewCategories
+      path: '/:category_id',
+      name: 'view-category',
+      component: ViewCategory
+    },
+    {
+      path: '/edit/:category_id',
+      name: 'edit-category',
+      component: EditCategory
     }
   ]
 })
