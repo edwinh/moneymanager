@@ -5,6 +5,7 @@ import Categories from '@/components/Categories'
 import NewCategory from '@/components/NewCategory'
 import ViewCategory from '@/components/ViewCategory'
 import EditCategory from '@/components/EditCategory'
+import UserCategories from '@/components/UserCategories'
 
 Vue.use(Router)
 
@@ -19,6 +20,11 @@ export default new Router({
       path: '/categories',
       name: 'Categories',
       component: Categories
+    },
+    {
+      path: '/user-categories',
+      name: 'UserCategories',
+      component: UserCategories
     },
     {
       path: '/add-category',
