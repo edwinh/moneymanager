@@ -1,18 +1,9 @@
 <template>
   <div class="user-categories">
     <ul class="collection">
-      <li class="collection-item">
+      <li v-for="category in categories" v-bind:key="category.id" class="collection-item">
         <label><input type="checkbox" />
-          <span>Café</span>
-        </label>
-      </li>
-      <li class="collection-item">
-        <label><input type="checkbox" />
-          <span>Kappers</span>
-        </label></li>
-      <li class="collection-item">
-        <label><input type="checkbox" />
-          <span>Restaurant</span>
+          <span>{{category.name}}</span>
         </label>
       </li>
     </ul>
@@ -33,11 +24,27 @@
 </template>
 
 <script>
+import db from './firebaseInit'
 export default {
   name: 'user-categories',
   data () {
     return {
+      categories: []
     }
+  },
+  created () {
+    db.collection('categories').orderBy('name').get()
+      .then(
+        querySnapshot => {
+          querySnapshot.forEach(doc => {
+            const data = {
+              'id': doc.data().id,
+              'name': doc.data().name
+            }
+            this.categories.push(data)
+          })
+        }
+      )
   }
 }
 </script>
