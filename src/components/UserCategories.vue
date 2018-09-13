@@ -9,14 +9,14 @@
     </ul>
 
     <div class="arrows">
-      <button type="submit" v-on:click="addCategory" class="btn green"><i class="fa fa-angle-double-right fa-2x"></i></button>
-      <button type="submit" v-on:click="removeCategory" class="btn blue"><i class="fa fa-angle-double-left fa-2x"></i></button>
+      <button type="submit" class="btn green"><i class="fa fa-angle-double-right fa-2x"></i></button>
+      <button type="submit" class="btn blue"><i class="fa fa-angle-double-left fa-2x"></i></button>
     </div>
 
     <ul class="collection">
-      <li class="collection-item">
+      <li v-for="usercategory in usercategories" v-bind:key="usercategory.id" class="collection-item">
         <label><input type="checkbox" />
-          <span>Supermarkt</span>
+          <span>{{usercategory.name}}</span>
         </label>
       </li>
     </ul>
@@ -29,11 +29,15 @@ export default {
   name: 'user-categories',
   data () {
     return {
-      categories: []
+      categories: [],
+      usercategories: []
     }
   },
   created () {
-    db.collection('categories').orderBy('name').get()
+    // Create vars for references to collections
+    var catRefs = db.collection('categories')
+    var usercatRefs = db.collection('usercategories')
+    catRefs.orderBy('name').get()
       .then(
         querySnapshot => {
           querySnapshot.forEach(doc => {
@@ -42,6 +46,25 @@ export default {
               'name': doc.data().name
             }
             this.categories.push(data)
+          })
+        }
+      )
+    usercatRefs.where('email', '==', 'edwinhoogervorst@gmail.com').get()
+      .then(
+        querySnapshot => {
+          querySnapshot.forEach(doc => {
+            catRefs.where('id', '==', doc.data().category_id).get()
+              .then(
+                querySnapshot => {
+                  querySnapshot.forEach(doc => {
+                    const data = {
+                      'id': doc.data().id,
+                      'name': doc.data().name
+                    }
+                    this.usercategories.push(data)
+                  })
+                }
+              )
           })
         }
       )
