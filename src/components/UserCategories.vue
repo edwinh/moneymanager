@@ -1,5 +1,5 @@
 <template>
-  <div class="user-categories">
+  <div v-if="showBlock" class="user-categories">
     <ul class="collection">
       <li v-for="category in categories" v-bind:key="category.id" class="collection-item">
         <label><input type="checkbox" />
@@ -30,13 +30,16 @@ export default {
   data () {
     return {
       categories: [],
-      usercategories: []
+      usercategories: [],
+      showBlock: false
     }
   },
   created () {
     // Create vars for references to collections
     var catRefs = db.collection('categories')
     var usercatRefs = db.collection('usercategories')
+    // Retrieve all categories
+    // TODO: exclude assigned categories
     catRefs.orderBy('name').get()
       .then(
         querySnapshot => {
@@ -49,6 +52,7 @@ export default {
           })
         }
       )
+    // Retrieve categories assigned to user
     usercatRefs.where('email', '==', 'edwinhoogervorst@gmail.com').get()
       .then(
         querySnapshot => {
@@ -62,6 +66,7 @@ export default {
                       'name': doc.data().name
                     }
                     this.usercategories.push(data)
+                    this.showBlock = true
                   })
                 }
               )
